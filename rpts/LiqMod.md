@@ -53,7 +53,7 @@ $$ R_{x}(t)R_{y}(t) = R_{x}(t+1)R_{y}(t+1) $$
 
 From this, it is observed that when a user places an order of $\Delta_{x}$ tokens 
 
-$$ R_{x}R_{y} = (R_{x} + \Delta_{x})(R_{y} - \frac{\Delta_{x}}{p_{s}}) $$
+$$ R_{x}R_{y} = (R_{x} + \Delta_{x})\left(R_{y} - \frac{\Delta_{x}}{p_{s}}\right) $$
 
 Where the effective swap price $p_{s}$ is the swap price. Rearranging this gives
 
@@ -61,9 +61,9 @@ $$ p_{s} = \frac{R_{x} + \Delta_{x}}{R_{y}} $$
 
 However, the new pool price $p_{p}$ is
 
-$$ p_{p} = \frac{R_{x} + \Delta_{x}}{R_{y} - \frac{\Delta_{x}}{p_{s}}} = \frac{R_{x} + 2 \Delta_{x}}{R_{y}} =  p_{s} + \frac{\Delta_{x}}{R_{y}} $$
+$$ p_{p} = \frac{R_{x} + \Delta_{x}}{R_{y} - \frac{\Delta_{x}}{p_{s}}} = p_{s} + \frac{\Delta_{x}}{R_{y}} + \frac{\Delta_{x}^{2}}{R_{x}R_{y}} $$
 
-The implication of the above equations implies that the post-swap pool price is different from the swap price by an amount proportional to the ratio of the order of token x to the reserves of y. This price inconsistency causes several effects:
+The implication of the above equations implies that the post-swap pool price is different from the swap price. This price inconsistency causes several effects:
 
 - Repeated price swing attracts more arbitrage opportunities than what AMM needs for real-time price discovery
 - Excessive arbitrage opportunities in AMM will cause more loss to pool investors and traders

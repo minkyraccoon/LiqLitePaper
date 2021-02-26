@@ -58,7 +58,7 @@ $$ p_{s} = \frac{R_{x} + \Delta_{x}}{R_{y}} $$
 
 토큰 교환 후 새로이 형성된 풀 가격 $p_{p}$은 다음과 같다.
 
-$$ p_{p} = \frac{R_{x} + \Delta_{x}}{R_{y} - \frac{\Delta_{x}}{p_{s}}} = \frac{R_{x} + 2 \Delta_{x}}{R_{y}} = p_{s} + \frac{\Delta_{x}}{R_{y}} $$
+$$ p_{p} = \frac{R_{x} + \Delta_{x}}{R_{y} - \frac{\Delta_{x}}{p_{s}}} = p_{s} + \frac{\Delta_{x}}{R_{y}} + \frac{\Delta_{x}^{2}}{R_{x}R_{y}} $$
 
 여기서 주목할 점은 토큰 교환 후 풀 가격이 토큰 교환 가격과 다르다는 것이다. 이러한 가격 비일관성은 몇 가지 문제를 야기한다:
 
