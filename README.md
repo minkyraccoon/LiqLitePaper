@@ -1,16 +1,16 @@
 # Liquidity Module Litepaper
 
-## Pre-requisites
+## Prerequisites
 
 - GNU make
 - Pandoc
-- Inter is Tendermint font. Can download from here: https://fonts.google.com/specimen/Inter
-- Korean and Chinese versions use the Noto library. Look here for install https://www.google.com/get/noto/help/cjk/
+- Inter is the Tendermint font and can be downloaded here: https://fonts.google.com/specimen/Inter
+- Korean and Chinese versions use the Noto library. To install Noto: https://www.google.com/get/noto/help/cjk/
 
 
 ## Usage
 
-- To create new report go just need to run 
+- To create new report, just run:
     - `make builden` for English version
     - `make buildko` for Korean version
     - `make buildzh` for Chinese version
@@ -18,7 +18,7 @@
 
 ## notes
 
-- This uses a latex template from [here](https://github.com/Wandmalfarbe/pandoc-latex-template)
-- Configuration is in two places:
-    - The make file - this sets the file locations for source and output
-    - The top of the report markdown in LiqMod.md, which sets font, footers, backgrounds etc. Check the above template for examples. 
+- This litepaper uses this [pandoc LaTeX template](https://github.com/Wandmalfarbe/pandoc-latex-template)
+- Configuration is required in two places:
+    - The make file sets the file locations for source and output
+    - The top of the report markdown in LiqMod.md sets font, footers, backgrounds, and so on. See the pandoc LaTeX template for examples. 
