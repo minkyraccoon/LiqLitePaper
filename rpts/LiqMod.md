@@ -1,6 +1,6 @@
-﻿
+﻿# Liquidity Module
 
-# Introduction
+## Introduction
 
 Recent enhancements in blockchain technology have allowed developers to build scalable, automated utilities upon trustless infrastructure. One utility class that has evolved significantly is Automated Market Makers (AMM) [@UniSwap:AMM-v2]. AMMs allow investors without significant capital or financial knowledge to invest in market-making opportunities.
 
@@ -8,7 +8,7 @@ Within the Cosmos Network [@Cosmos:Intro], a significant advancement is Inter-Bl
 
 Inspired by these advances, this paper proposes a Decentralized Token Exchange (DEX) on the Cosmos Ecosystem. The module features an AMM model combined with order books, multi-block batches, and limit orders to bring high-quality liquidity to the Cosmos Hub. This marketplace will likely be an essential core utility as IBC and pegzones increase token exchange activity in the Cosmos Ecosystem.
 
-# Uniswap AMM based models
+## Uniswap AMM based models
 
 In the Ethereum ecosystem, there has been significant development of Decentralized Finance (DeFi) utilities. The Uniswap Automated Market Maker (AMM) model[@UniSwap:AMM-v2] is the most notable.
 
@@ -20,23 +20,23 @@ Automated Market Makers are a decentralized exchange (DEX) mechanism that uses a
 
 Overall, despite their simplicity, AMM's have brought significant benefits and exhibit stable properties under many market conditions [@angeris:2020UniSwapAnalysis]. However, there are weaknesses in the design, particularly in order execution and price inconsistencies.
 
-## Price inconsistency {#sec:PriceInconsistency}
+### Price inconsistency {#sec:PriceInconsistency}
 
 The heart of the AMM model is the *Constant Product Equation*. $R_{x}R_{y} = k$ where $R_{x}$ and $R_{y}$ represent the reserve amount of different two tokens (x and y) and k is constant such that k > 0. This product remains constant during the token swap process such that for time t+1.
 
-$$ R_{x}(t)R_{y}(t) = R_{x}(t+1)R_{y}(t+1) $$
+$$R_{x}(t)R_{y}(t) = R_{x}(t+1)R_{y}(t+1)$$
 
 From this, it is observed that when a user places an order of $\Delta_{x}$ tokens 
 
-$$ R_{x}R_{y} = (R_{x} + \Delta_{x})\left(R_{y} - \frac{\Delta_{x}}{p_{s}}\right) $$
+$$R_{x}R_{y} = (R_{x} + \Delta_{x})\left(R_{y} - \frac{\Delta_{x}}{p_{s}}\right)$$
 
 Where the effective swap price $p_{s}$ is the swap price. Rearranging this gives
 
-$$ p_{s} = \frac{R_{x} + \Delta_{x}}{R_{y}} $$
+$$p_{s} = \frac{R_{x} + \Delta_{x}}{R_{y}}$$
 
 However, the new pool price $p_{p}$ is
 
-$$ p_{p} = \frac{R_{x} + \Delta_{x}}{R_{y} - \frac{\Delta_{x}}{p_{s}}} = p_{s} + \frac{\Delta_{x}}{R_{y}} + \frac{\Delta_{x}^{2}}{R_{x}R_{y}} $$
+$$p_{p} = \frac{R_{x} + \Delta_{x}}{R_{y} - \frac{\Delta_{x}}{p_{s}}} = p_{s} + \frac{\Delta_{x}}{R_{y}} + \frac{\Delta_{x}^{2}}{R_{x}R_{y}}$$
 
 The implication of the above equations implies that the post-swap pool price is different from the swap price. This price inconsistency causes several effects:
 
@@ -45,23 +45,23 @@ The implication of the above equations implies that the post-swap pool price is 
 
 ![Inefficient Price Discovery By Constant Product Model](./imgs/LiqMod/InefficientPriceDiscoveryFigure.png)
 
-## Order Execution Priority
+### Order Execution Priority
 
 In Ethereum, miners have absolute power to sort transactions in a block. The transaction order can significantly impact the execution price in Uniswap's AMM model. This problem exists not only in Proof of Work (PoW) consensus networks but also in Proof of Stake (PoS) and Delegated Proof of Stake (DPoS) network environments [@zhou:2020highfrequency]. The combination of price inconsistency described above with transaction ordering can adversely impact execution price.
 
 A second effect of the control of validators over transaction ordering is gas/latency competition. Because traders compete with each other for execution priority, this causes an increase in gas prices. It can also encourage undesirable behaviors such as collusion between validators/miners and traders and front running.
 
-## Order types
+### Order types
 
 In current Uniswap AMM models, orders cannot be alive for more than one block because they are either immediately executed or failed. This means that after one block, all the liquidity has to be lost and needs to be replenished with the new orders.
 
 Further, AMM's typically do not permit limit orders (although this can be done via third parties). A limit order is an order to buy or sell a token at a specific price or better. Unlike market orders, limit orders allow users to place orders at a price they are prepared to buy/sell. These orders remain in the market until they are satisfied or cancelled. Orders of this type aid price discovery and increase market participation. Limit orders also allow active market participants to use various trading strategies, which in turn adds enhances liquidity and reduces the price impact(slippage) of swap orders, hence reducing trading costs for users
 
-## Fractional Order Execution
+### Fractional Order Execution
 
 When given a larger order, traders will often fill it through a series of smaller trades with different counterparties, at various venues, at different prices over some time. In doing so, they get better prices for clients and can better manage liquidity. This fractional execution (or partial filling) of orders is a use-case that is not possible with current automated market maker models.
 
-# Proposed Cosmos AMM
+## Proposed Cosmos AMM
 
 Based on the analysis above, we propose a Hybrid Exchange model that combines a batch-based order book [@Wikipedia:OrderBook] matching algorithm with an AMM-based methodology such that 
 
@@ -76,7 +76,7 @@ Also, the proposed model
 - Permits limit orders that stay in the order book until they are filled or cancelled. Indeed, they can remain open over multiple batches
 - Allows partial filling of orders in the case where order price is equal to swap price.
 
-## Batch Execution
+### Batch Execution
 
 To address the issues related to order execution, it is proposed to use a **Batch Execution** methodology. This follows a proposal outlined by [@Pourpouneh:AMM], which is called *"batch auction"*
 
@@ -91,7 +91,7 @@ In our model, there are two key features:
 
 As [@Pourpouneh:AMM] mentions, for a DEX, batch execution prevents front-running and collusion between miners/validators and traders, resulting in a fairer trading environment for all. 
 
-## Order Matching Rules
+### Order Matching Rules
 
 The model allows fractional and full matching of orders based on the following criteria:
 
@@ -106,15 +106,15 @@ The model allows fractional and full matching of orders based on the following c
 
 The liquidity pool contributes liquidity to order matching through the Equivalent Swap Price Model.
 
-## Equivalent Swap Price Model {#sec:EquivPriceModel}
+### Equivalent Swap Price Model {#sec:EquivPriceModel}
 
 As seen in section \ref{sec:PriceInconsistency}, the Constant Product Model results in differences between the Swap Price and Pool price after execution. This creates an issue when using an order book with the liquidity pool since there will be a difference between the swap price in the order book and the price offered by the liquidity pool. To address this, the swap price calculation is redefined, so that swap price and post-swap pool price are equivalent:
 
-$$ p_{p} = \frac{R_{x} + \Delta_{x}}{R_{y} - \frac{\Delta_{x}}{p_{s}}} = p_{s} $$
+$$p_{p} = \frac{R_{x} + \Delta_{x}}{R_{y} - \frac{\Delta_{x}}{p_{s}}} = p_{s} $$
 
 Solving the above equation for SwapPrice $p_{s}$ yields
 
-$$ p_{s} = \frac{(R_{x} + 2 \Delta_{x})}{R_{y}} $$
+$$p_{s} = \frac{(R_{x} + 2 \Delta_{x})}{R_{y}} $$
 
 Compared to the Constant Product Model, the Equivalent Swap Price Model reduces the arbitrage opportunity because the pool price lands precisely on the last swap price. 
 
@@ -135,7 +135,7 @@ $$
 
 ![Demand and Supply](./imgs/LiqMod/DemandSupply.png)
 
-## Fees
+### Fees
 
 There are two types of fees within the liquidity module: those related to the administration of pools and those that are transaction-related. All fees have some specific economic purpose.
 
@@ -160,7 +160,7 @@ Initial analysis proposes the following fee structure:
 - Withdraw Fee Rate = 0.003 (0.3%)
 - Pool Creation Fee = 100Atom
 
-# Conclusion
+## Conclusion
 
 This paper briefly outlines the proposed design of a Cosmos Hub AMM. We believe that this will bring significant financial utility to the Cosmos Network through the following features:
 
@@ -176,7 +176,7 @@ The potential of the Cosmos Hub AMM is inspiring. With IBC's asset transfer capa
 Module implementation can be found at https://github.com/tendermint/liquidity/tree/develop
 
 
-# References
+## References
 
 
 
