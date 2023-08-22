@@ -24,19 +24,27 @@ Overall, despite their simplicity, AMM's have brought significant benefits and e
 
 The heart of the AMM model is the *Constant Product Equation*. $R_{x}R_{y} = k$ where $R_{x}$ and $R_{y}$ represent the reserve amount of different two tokens (x and y) and k is constant such that k > 0. This product remains constant during the token swap process such that for time t+1.
 
-$$R_{x}(t)R_{y}(t) = R_{x}(t+1)R_{y}(t+1)$$
+$$
+R_{x}(t)R_{y}(t) = R_{x}(t+1)R_{y}(t+1)
+$$
 
 From this, it is observed that when a user places an order of $\Delta_{x}$ tokens 
 
-$$R_{x}R_{y} = (R_{x} + \Delta_{x})\left(R_{y} - \frac{\Delta_{x}}{p_{s}}\right)$$
+$$
+R_{x}R_{y} = (R_{x} + \Delta_{x})\left(R_{y} - \frac{\Delta_{x}}{p_{s}}\right)
+$$
 
 Where the effective swap price $p_{s}$ is the swap price. Rearranging this gives
 
-$$p_{s} = \frac{R_{x} + \Delta_{x}}{R_{y}}$$
+$$
+p_{s} = \frac{R_{x} + \Delta_{x}}{R_{y}}
+$$
 
 However, the new pool price $p_{p}$ is
 
-$$p_{p} = \frac{R_{x} + \Delta_{x}}{R_{y} - \frac{\Delta_{x}}{p_{s}}} = p_{s} + \frac{\Delta_{x}}{R_{y}} + \frac{\Delta_{x}^{2}}{R_{x}R_{y}}$$
+$$
+p_{p} = \frac{R_{x} + \Delta_{x}}{R_{y} - \frac{\Delta_{x}}{p_{s}}} = p_{s} + \frac{\Delta_{x}}{R_{y}} + \frac{\Delta_{x}^{2}}{R_{x}R_{y}}
+$$
 
 The implication of the above equations implies that the post-swap pool price is different from the swap price. This price inconsistency causes several effects:
 
@@ -110,11 +118,13 @@ The liquidity pool contributes liquidity to order matching through the Equivalen
 
 As seen in section \ref{sec:PriceInconsistency}, the Constant Product Model results in differences between the Swap Price and Pool price after execution. This creates an issue when using an order book with the liquidity pool since there will be a difference between the swap price in the order book and the price offered by the liquidity pool. To address this, the swap price calculation is redefined, so that swap price and post-swap pool price are equivalent:
 
-$$p_{p} = \frac{R_{x} + \Delta_{x}}{R_{y} - \frac{\Delta_{x}}{p_{s}}} = p_{s} $$
+$$
+p_{p} = \frac{R_{x} + \Delta_{x}}{R_{y} - \frac{\Delta_{x}}{p_{s}}} = p_{s}
+$$
 
 Solving the above equation for SwapPrice $p_{s}$ yields
 
-$$p_{s} = \frac{(R_{x} + 2 \Delta_{x})}{R_{y}} $$
+$$p_{s} = \frac{(R_{x} + 2 \Delta_{x})}{R_{y}}$$
 
 Compared to the Constant Product Model, the Equivalent Swap Price Model reduces the arbitrage opportunity because the pool price lands precisely on the last swap price. 
 
