@@ -43,7 +43,7 @@ The implication of the above equations implies that the post-swap pool price is 
 - Repeated price swing attracts more arbitrage opportunities than what AMM needs for real-time price discovery
 - Excessive arbitrage opportunities in AMM will cause more loss to pool investors and traders
 
-![Inefficient Price Discovery By Constant Product Model](./imgs/LiqMod/InefficientPriceDiscoveryFigure.png)
+![Inefficient Price Discovery By Constant Product Model](./img/InefficientPriceDiscoveryFigure.png)
 
 ### Order Execution Priority
 
@@ -65,7 +65,7 @@ When given a larger order, traders will often fill it through a series of smalle
 
 Based on the analysis above, we propose a Hybrid Exchange model that combines a batch-based order book [@Wikipedia:OrderBook] matching algorithm with an AMM-based methodology such that 
 
-![](./imgs/LiqMod/OrderBookModel.png){ width=200px }\ ![](./imgs/LiqMod/LiquidityPoolModel.png){ width=200px }\ ![](./imgs/LiqMod/HybridModel.png){ width=200px }
+![](./img/OrderBookModel.png){ width=200px }\ ![](./img/LiquidityPoolModel.png){ width=200px }\ ![](./img/HybridModel.png){ width=200px }
 
 - Orders are accumulated in the order book
 - At every batch execution height the order book is processed using a matching engine
@@ -118,7 +118,7 @@ $$p_{s} = \frac{(R_{x} + 2 \Delta_{x})}{R_{y}} $$
 
 Compared to the Constant Product Model, the Equivalent Swap Price Model reduces the arbitrage opportunity because the pool price lands precisely on the last swap price. 
 
-![Efficient Price Discovery By Equivalent Swap PriceModel](./imgs/LiqMod/EfficientPriceDiscoveryFigure.png)
+![Efficient Price Discovery By Equivalent Swap PriceModel](./img/EfficientPriceDiscoveryFigure.png)
 
 However, it should be noted that the result of this price equivalence is that the Constant Product Formula does not hold. This means that the liquidity pool balance is path-dependent. [@vitalik:PathIndependence]
 
@@ -133,7 +133,7 @@ $$
 $$
 
 
-![Demand and Supply](./imgs/LiqMod/DemandSupply.png)
+![Demand and Supply](./img/DemandSupply.png)
 
 ### Fees
 
